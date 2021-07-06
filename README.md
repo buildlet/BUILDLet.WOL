@@ -1,2 +1,2 @@
-# BUILDLet.WOL
-BUILDLet WOL (AMD Magic Packet Format Transmitter)
+# BUILDLet WOL
+AMD Magic Packet Format Transmitter
