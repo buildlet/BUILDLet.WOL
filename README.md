@@ -19,12 +19,12 @@ Trouble Shooting
 - If you have not correctly imported our certification file ([BUILDLet.cer](./Certificate/BUILDLet.cer)) into "Trusted Root Certification Authorities" of Local Machine, "Install" button is not enabled as the following figure.
 
   <!--![Not Trusted App](./README/Installer_not_trusted_app.png "Not Trusted App")-->
-  <img src="./README/Installer_not_trusted_app.png" alt="Not Trusted App" width="400">
+  <img src="./README/Installer_not_trusted_app.png" alt="Not Trusted App" width="450" border="1">
 
   If you can successfully import our certification file ([BUILDLet.cer](Certificate/BUILDLet.cer)), "Install" button gets enabled as the following figure.
 
   <!--![Trusted App](./README/Installer_trusted_app.png "Trusted App")-->
-  <img src="./README/Installer_trusted_app.png" alt="Trusted App" width="400">
+  <img src="./README/Installer_trusted_app.png" alt="Trusted App" width="450" border="1">
 
 Build and Test
 --------------
