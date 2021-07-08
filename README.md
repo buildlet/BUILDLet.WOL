@@ -6,6 +6,14 @@ Introduction
 
 This project provides AMD Magic Packet Format Transmitter App on UWP (Universal Windows Platform).
 
+- Send Page  
+
+  <img src="./README/SendPage.png" alt="Send Page" width="350">
+
+- Setting Page
+
+  <img src="./README/SettingPage.png" alt="Setting Page" width="350">
+
 Getting Started
 ---------------
 
@@ -18,13 +26,11 @@ Trouble Shooting
 
 - If you have not correctly imported our certification file ([BUILDLet.cer](./Certificate/BUILDLet.cer)) into "Trusted Root Certification Authorities" of Local Machine, "Install" button is not enabled as the following figure.
 
-  <!--![Not Trusted App](./README/Installer_not_trusted_app.png "Not Trusted App")-->
-  <img src="./README/Installer_not_trusted_app.png" alt="Not Trusted App" width="450" border="1">
+  <img src="./README/Installer_not_trusted_app.png" alt="Not Trusted App" width="450">
 
   If you can successfully import our certification file ([BUILDLet.cer](Certificate/BUILDLet.cer)), "Install" button gets enabled as the following figure.
 
-  <!--![Trusted App](./README/Installer_trusted_app.png "Trusted App")-->
-  <img src="./README/Installer_trusted_app.png" alt="Trusted App" width="450" border="1">
+  <img src="./README/Installer_trusted_app.png" alt="Trusted App" width="450">
 
 Build and Test
 --------------
