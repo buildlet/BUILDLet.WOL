@@ -8,11 +8,11 @@ This project provides AMD Magic Packet Format Transmitter App on UWP (Universal 
 
 - Send Page  
 
-  <img src="./README/SendPage.png" alt="Send Page" width="350">
+  <img src="./README/SendPage.PNG" alt="Send Page" width="350">
 
 - Setting Page
 
-  <img src="./README/SettingPage.png" alt="Setting Page" width="350">
+  <img src="./README/SettingPage.PNG" alt="Setting Page" width="350">
 
 Getting Started
 ---------------
