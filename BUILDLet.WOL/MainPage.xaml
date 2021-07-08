@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="BUILDLet.WOL.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BUILDLet.WOL"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    d:DesignWidth="500"
+    d:DesignHeight="300">
+
+    <NavigationView x:Name="NavigationView"
+                    IsBackButtonVisible="Collapsed"
+                    PaneDisplayMode="LeftMinimal"
+                    IsPaneOpen="False"
+                    Header="WOL"
+                    Loaded="NavigationView_Loaded"
+                    ItemInvoked="NavigationView_ItemInvoked"
+                    SelectionChanged="NavigationView_SelectionChanged">
+
+        <NavigationView.MenuItems>
+            <NavigationViewItem Icon="Send" Content="Send" Tag="Send"/>
+        </NavigationView.MenuItems>
+
+        <Frame x:Name="ContentFrame"/>
+
+    </NavigationView>
+
+</Page>

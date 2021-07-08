@@ -1,0 +1,40 @@
+﻿<Page
+    x:Class="BUILDLet.WOL.SendPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BUILDLet.WOL"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    d:DesignWidth="500"
+    d:DesignHeight="300">
+
+    <StackPanel>
+        <muxc:InfoBar x:Name="InfoBar"
+                      Message="{x:Bind ((local:App)local:App.Current).ViewModel.ResultMessage, Mode=OneWay}"
+                      Severity="{x:Bind ((local:App)local:App.Current).ViewModel.ResultSeverity, Mode=OneWay}"
+                      IsOpen="{x:Bind ((local:App)local:App.Current).ViewModel.CommandExecuted, Mode=OneWay}"
+                      Width="Auto"
+                      />
+
+        <StackPanel Style="{StaticResource Content}">
+            <TextBox x:Name="MacAddress"
+                     Header="MAC Address:"
+                     PlaceholderText="01:23:45:AB:CD:EF"
+                     Text="{x:Bind ((local:App)local:App.Current).ViewModel.MacAddress, Mode=TwoWay}"
+                     IsEnabled="{x:Bind ((local:App)local:App.Current).ViewModel.CanSend, Mode=OneWay}"
+                     Width="200"
+                     />
+
+            <Button x:Name="SendButton"
+                    Content="Send"
+                    Width="100"
+                    Command="{x:Bind ((local:App)local:App.Current).ViewModel.SendComamand}"
+                    CommandParameter="{x:Bind ((local:App)local:App.Current).ViewModel}"
+                    />
+        </StackPanel>
+    </StackPanel>
+    
+</Page>

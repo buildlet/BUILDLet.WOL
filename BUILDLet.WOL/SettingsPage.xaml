@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="BUILDLet.WOL.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BUILDLet.WOL"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    d:DesignWidth="500"
+    d:DesignHeight="300">
+
+    <StackPanel Style="{StaticResource Content}">
+        <muxc:NumberBox x:Name="port"
+                        Header="Port:"
+                        Value="{x:Bind ((local:App)local:App.Current).ViewModel.Port, Mode=TwoWay}"
+                        Maximum="65535"
+                        Minimum="0"
+                        Width="120"
+                        />
+        
+        <muxc:NumberBox x:Name="count"
+                        Header="Count:"
+                        SpinButtonPlacementMode="Inline"
+                        Value="{x:Bind ((local:App)local:App.Current).ViewModel.Count, Mode=TwoWay}"
+                        Maximum="100"
+                        Minimum="1"
+                        Width="120"
+                        />
+        
+        <muxc:NumberBox x:Name="interval"
+                        Header="Interval:"
+                        PlaceholderText="msec"
+                        Value="{x:Bind ((local:App)local:App.Current).ViewModel.Interval, Mode=TwoWay}"
+                        Maximum="9999"
+                        Minimum="0"
+                        Width="120"
+                        />
+        
+        <Button x:Name="VersionInformationButton"
+                Content="Version Information"
+                Margin="5,15,0,0"
+                Click="VersionInformationButton_Click"
+                />
+    </StackPanel>
+</Page>
