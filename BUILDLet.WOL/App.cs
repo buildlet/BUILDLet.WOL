@@ -20,18 +20,22 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 ***************************************************************************************************/
 using Windows.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Windows.Input;  // for ICommand
 
 namespace BUILDLet.WOL
 {
     sealed partial class App : Application
     {
         // Set ViewModel to App
-        public MagicPacketViewModel<InfoBarSeverity> ViewModel { get; set; } = new MagicPacketViewModel<InfoBarSeverity>
-        {
-            Port = 2304,
-            Count = 3,
-            Interval = 100,
-            GetSeverity = success => success ? InfoBarSeverity.Success : InfoBarSeverity.Error
-        };
+        public MagicPacketViewModel<InfoBarSeverity> ViewModel { get; set; }
+            = new MagicPacketViewModel<InfoBarSeverity>(
+                2304, // Port (Default)
+                3,    // Count (Default)
+                100,  // Interval (Default)
+                5,    // History
+                success => success ? InfoBarSeverity.Success : InfoBarSeverity.Error);
+
+        // SendComamand
+        public ICommand SendComamand { get; private set; } = new MagicPacketSendCommand<InfoBarSeverity>();
     }
 }

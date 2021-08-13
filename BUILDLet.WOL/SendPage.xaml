@@ -9,31 +9,33 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     d:DesignWidth="500"
-    d:DesignHeight="300">
+    d:DesignHeight="400">
 
     <StackPanel>
-        <muxc:InfoBar x:Name="InfoBar"
-                      Message="{x:Bind ((local:App)local:App.Current).ViewModel.ResultMessage, Mode=OneWay}"
-                      Severity="{x:Bind ((local:App)local:App.Current).ViewModel.ResultSeverity, Mode=OneWay}"
-                      IsOpen="{x:Bind ((local:App)local:App.Current).ViewModel.CommandExecuted, Mode=OneWay}"
-                      Width="Auto"
-                      />
+        <muxc:InfoBar
+            x:Name="InfoBar"
+            Message="{x:Bind ((local:App)local:App.Current).ViewModel.ResultMessage, Mode=OneWay}"
+            Severity="{x:Bind ((local:App)local:App.Current).ViewModel.ResultSeverity, Mode=OneWay}"
+            IsOpen="{x:Bind ((local:App)local:App.Current).ViewModel.CommandExecuted, Mode=TwoWay}"
+            Width="Auto"/>
 
         <StackPanel Style="{StaticResource Content}">
-            <TextBox x:Name="MacAddress"
-                     Header="MAC Address:"
-                     PlaceholderText="01:23:45:AB:CD:EF"
-                     Text="{x:Bind ((local:App)local:App.Current).ViewModel.MacAddress, Mode=TwoWay}"
-                     IsEnabled="{x:Bind ((local:App)local:App.Current).ViewModel.CanSend, Mode=OneWay}"
-                     Width="200"
-                     />
+            <AutoSuggestBox
+                x:Name="MacAddress"
+                Header="MAC Address:"
+                PlaceholderText="01:23:45:AB:CD:EF"
+                Text="{x:Bind ((local:App)local:App.Current).ViewModel.MacAddress, Mode=TwoWay}"
+                IsEnabled="{x:Bind ((local:App)local:App.Current).ViewModel.CanSend, Mode=OneWay}"
+                Width="200"
+                GotFocus="MacAddress_GotFocus"
+                TextChanged="MacAddress_TextChanged"/>
 
-            <Button x:Name="SendButton"
-                    Content="Send"
-                    Width="100"
-                    Command="{x:Bind ((local:App)local:App.Current).ViewModel.SendComamand}"
-                    CommandParameter="{x:Bind ((local:App)local:App.Current).ViewModel}"
-                    />
+            <Button
+                x:Name="SendButton"
+                Content="Send"
+                Width="100"
+                Command="{x:Bind ((local:App)local:App.Current).SendComamand}"
+                CommandParameter="{x:Bind ((local:App)local:App.Current).ViewModel}"/>
         </StackPanel>
     </StackPanel>
     

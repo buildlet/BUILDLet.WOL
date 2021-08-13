@@ -8,7 +8,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-
                 <!-- for Microsoft.UI.Xaml.Controls -->
                 <muxc:XamlControlsResources/>
             </ResourceDictionary.MergedDictionaries>

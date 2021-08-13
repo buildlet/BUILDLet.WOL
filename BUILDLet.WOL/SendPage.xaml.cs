@@ -33,10 +33,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI;
-using Microsoft.UI.Xaml.Controls;  // for InfoBar
-
-using BUILDLet.Standard.Utilities.Network;  // for MagicPacket
-using System.Threading.Tasks;
 
 namespace BUILDLet.WOL
 {
@@ -45,6 +41,42 @@ namespace BUILDLet.WOL
         public SendPage()
         {
             this.InitializeComponent();
+        }
+
+
+        private void MacAddress_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                // Set ItemSource
+                sender.ItemsSource = GetMacAddressHistory(sender.Text);
+            }
+        }
+
+        private void MacAddress_GotFocus(object sender, RoutedEventArgs e)
+        {
+            // Set ItemSource
+            (sender as AutoSuggestBox).ItemsSource = GetMacAddressHistory((sender as AutoSuggestBox).Text);
+        }
+
+
+        private object GetMacAddressHistory(string text)
+        {
+            // Get History
+            var address_list = ((App)App.Current).ViewModel.MacAddressHistoryList;
+
+            // object to be Returned
+            object source = null;
+
+            // Set ItemSource
+            if (address_list != null && text.Length < "FF:FF:FF:FF:FF:EF".Length)
+            {
+                // RETURN: Hintory as ItemSource (Upper Case)
+                source = address_list.FindAll(address => address.StartsWith(text.ToUpper(), StringComparison.OrdinalIgnoreCase)); ;
+            }
+
+            // RETURN: ItemSource or NULL
+            return source;
         }
     }
 }
