@@ -8,18 +8,18 @@ This project provides AMD Magic Packet Format Transmitter App on UWP (Universal 
 
 - Send Page  
 
-  <img src="./README/SendPage.PNG" alt="Send Page" width="350">
+  <img src="./README/SendPage_v1.1.0.PNG" alt="Send Page" width="350">
 
 - Setting Page
 
-  <img src="./README/SettingPage.PNG" alt="Setting Page" width="350">
+  <img src="./README/SettingPage_v1.1.0.PNG" alt="Setting Page" width="350">
 
 Getting Started
 ---------------
 
 1. Download the certification file [BUILDLet.cer](./Certificate/BUILDLet.cer) to your computer.
 2. Import the downloaded certification file (BUILDLet.cer) into "Trusted Root Certification Authorities" of Local Machine, if you can trust us.
-3. Download the installer package for your platform ([x86](./BUILDLet.WOL/AppPackages/BUILDLet.WOL_1.0.0.0_x86_Test/BUILDLet.WOL_1.0.0.0_x86.msix), [x64](./BUILDLet.WOL/AppPackages/BUILDLet.WOL_1.0.0.0_x64_Test/BUILDLet.WOL_1.0.0.0_x64.msix), [ARM](./BUILDLet.WOL/AppPackages/BUILDLet.WOL_1.0.0.0_ARM_Test/BUILDLet.WOL_1.0.0.0_ARM.msix) or [ARM64](./BUILDLet.WOL/AppPackages/BUILDLet.WOL_1.0.0.0_ARM64_Test/BUILDLet.WOL_1.0.0.0_ARM64.msix)) on your computer, and execute it.
+3. Download the installer package for your platform ([x86](./BUILDLet.WOL/AppPackages/BUILDLet.WOL_1.1.0.0_x86_Test/BUILDLet.WOL_1.1.0.0_x86.msix), [x64](./BUILDLet.WOL/AppPackages/BUILDLet.WOL_1.1.0.0_x64_Test/BUILDLet.WOL_1.1.0.0_x64.msix), [ARM](./BUILDLet.WOL/AppPackages/BUILDLet.WOL_1.1.0.0_ARM_Test/BUILDLet.WOL_1.1.0.0_ARM.msix) or [ARM64](./BUILDLet.WOL/AppPackages/BUILDLet.WOL_1.1.0.0_ARM64_Test/BUILDLet.WOL_1.1.0.0_ARM64.msix)) on your computer, and execute it.
 
 Trouble Shooting
 ----------------
@@ -37,6 +37,15 @@ Build and Test
 
 - This project (Visual Studio Solution) is built and tested on Visual Studio.
 - We did not tested our App on ARM Platform (including ARM64).
+
+Change History
+--------------
+
+- **v1.0.0**
+  - 1st Release
+
+- **v1.1.0**
+  - History function was added.
 
 License
 -------
