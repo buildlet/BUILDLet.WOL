@@ -9,39 +9,49 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     d:DesignWidth="500"
-    d:DesignHeight="300">
+    d:DesignHeight="400">
 
     <StackPanel Style="{StaticResource Content}">
-        <muxc:NumberBox x:Name="port"
-                        Header="Port:"
-                        Value="{x:Bind ((local:App)local:App.Current).ViewModel.Port, Mode=TwoWay}"
-                        Maximum="65535"
-                        Minimum="0"
-                        Width="120"
-                        />
+        <muxc:NumberBox
+            x:Name="port"
+            Header="Port:"
+            SpinButtonPlacementMode="Compact"
+            Value="{x:Bind ((local:App)local:App.Current).ViewModel.Port, Mode=TwoWay}"
+            Maximum="65535"
+            Minimum="0"
+            Width="120"/>
         
-        <muxc:NumberBox x:Name="count"
-                        Header="Count:"
-                        SpinButtonPlacementMode="Inline"
-                        Value="{x:Bind ((local:App)local:App.Current).ViewModel.Count, Mode=TwoWay}"
-                        Maximum="100"
-                        Minimum="1"
-                        Width="120"
-                        />
+        <muxc:NumberBox
+            x:Name="count"
+            Header="Count:"
+            SpinButtonPlacementMode="Compact"
+            Value="{x:Bind ((local:App)local:App.Current).ViewModel.Count, Mode=TwoWay}"
+            Maximum="100"
+            Minimum="1"
+            Width="120"/>
         
-        <muxc:NumberBox x:Name="interval"
-                        Header="Interval:"
-                        PlaceholderText="msec"
-                        Value="{x:Bind ((local:App)local:App.Current).ViewModel.Interval, Mode=TwoWay}"
-                        Maximum="9999"
-                        Minimum="0"
-                        Width="120"
-                        />
-        
-        <Button x:Name="VersionInformationButton"
-                Content="Version Information"
-                Margin="5,15,0,0"
-                Click="VersionInformationButton_Click"
-                />
+        <muxc:NumberBox
+            x:Name="interval"
+            Header="Interval:"
+            PlaceholderText="msec"
+            SpinButtonPlacementMode="Compact"
+            Value="{x:Bind ((local:App)local:App.Current).ViewModel.Interval, Mode=TwoWay}"
+            Maximum="999"
+            Minimum="0"
+            Width="120"/>
+
+        <Button
+            x:Name="RestoreDefaultsButton"
+            Content="Restore Defaults"
+            Width="150"
+            Margin="5,15,0,0"
+            Click="RestoreDefaultsButton_Click"/>
+
+        <Button
+            x:Name="VersionInformationButton"
+            Content="Version Information"
+            Width="150"
+            Margin="5,15,0,0"
+            Click="VersionInformationButton_Click"/>
     </StackPanel>
 </Page>

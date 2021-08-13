@@ -10,14 +10,15 @@
     d:DesignWidth="500"
     d:DesignHeight="300">
 
-    <NavigationView x:Name="NavigationView"
-                    IsBackButtonVisible="Collapsed"
-                    PaneDisplayMode="LeftMinimal"
-                    IsPaneOpen="False"
-                    Header="WOL"
-                    Loaded="NavigationView_Loaded"
-                    ItemInvoked="NavigationView_ItemInvoked"
-                    SelectionChanged="NavigationView_SelectionChanged">
+    <NavigationView
+        x:Name="NavigationView"
+        IsBackButtonVisible="Collapsed"
+        PaneDisplayMode="LeftMinimal"
+        IsPaneOpen="False"
+        Header="WOL"
+        Loaded="NavigationView_Loaded"
+        ItemInvoked="NavigationView_ItemInvoked"
+        SelectionChanged="NavigationView_SelectionChanged">
 
         <NavigationView.MenuItems>
             <NavigationViewItem Icon="Send" Content="Send" Tag="Send"/>

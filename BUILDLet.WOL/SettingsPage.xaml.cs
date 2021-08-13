@@ -46,7 +46,6 @@ namespace BUILDLet.WOL
             this.InitializeComponent();
         }
 
-
         private async void VersionInformationButton_Click(object sender, RoutedEventArgs e)
         {
             // Get Version Information from this Assembly
@@ -58,6 +57,11 @@ namespace BUILDLet.WOL
                     attributes.Product,
                     attributes.Version.ToString(),
                     attributes.Copyright)).ShowAsync();
+        }
+
+        private void RestoreDefaultsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((App)App.Current).ViewModel.Clear();
         }
     }
 }

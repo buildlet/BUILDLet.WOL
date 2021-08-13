@@ -59,7 +59,7 @@ namespace BUILDLet.WOL
         {
             // SET Initial Window Size
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            ApplicationView.PreferredLaunchViewSize = new Size(500, 350);
+            ApplicationView.PreferredLaunchViewSize = new Size(500, 400);
 
             // Add Event Handler for ContentFrame Navigation
             this.ContentFrame.Navigated += On_Navigated;

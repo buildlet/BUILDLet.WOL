@@ -28,6 +28,7 @@
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <PackageCertificateKeyFile />
+    <AppxPackageSigningTimestampServerUrl>http://timestamp.digicert.com</AppxPackageSigningTimestampServerUrl>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -130,6 +131,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MagicPacketSendCommand.cs" />
+    <Compile Include="MagicPacketRoamingSettingsValues.cs" />
     <Compile Include="MagicPacketViewModel.cs" />
     <Compile Include="SendPage.xaml.cs">
       <DependentUpon>SendPage.xaml</DependentUpon>
@@ -226,7 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BUILDLet.Standard.Utilities">
-      <Version>1.6.1</Version>
+      <Version>1.6.4</Version>
     </PackageReference>
     <PackageReference Include="BUILDLet.UWP.Controls">
       <Version>1.6.1</Version>
@@ -235,7 +238,7 @@
       <Version>6.2.12</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.6.0</Version>
+      <Version>2.6.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

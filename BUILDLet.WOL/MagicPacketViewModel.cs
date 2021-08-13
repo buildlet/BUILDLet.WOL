@@ -19,16 +19,18 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ***************************************************************************************************/
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Windows.Storage;  // for ApplicationData
 using Microsoft.UI.Xaml.Controls;
 
 using BUILDLet.Standard.Utilities.Network;
 
 namespace BUILDLet.WOL
 {
-    public class MagicPacketViewModel<TSeverity>: INotifyPropertyChanged
+    public class MagicPacketViewModel<TSeverity> : INotifyPropertyChanged
     {
         private string address;
         private int port;
@@ -41,6 +43,31 @@ namespace BUILDLet.WOL
         private TSeverity severity;
 
 
+        // Constructor
+        public MagicPacketViewModel(int defaultPort, int defaultCount, int defaultInterval, int history, GetSeverityDelegate getSeverity)
+        {
+            // Get Roaming Settings
+            this.RoamingSettingsValues = new MagicPacketRoamingSettingsValues(defaultPort, defaultCount, defaultInterval, history);
+
+            // Set Port, Count, Interval and MacAddressHistoryList from RoamingSettingsValues
+            this.Port = this.RoamingSettingsValues.Port;
+            this.Count = this.RoamingSettingsValues.Count;
+            this.Interval = this.RoamingSettingsValues.Interval;
+            this.MacAddressHistoryList = this.RoamingSettingsValues.GetMacAddressHistoryList() as List<string>;
+
+            // Set GetSeverityDelegate
+            this.GetSeverity = getSeverity;
+        }
+
+
+        // for Roaming Settings
+        public MagicPacketRoamingSettingsValues RoamingSettingsValues { get; }
+
+        // for List of MAC Address History
+        public List<string> MacAddressHistoryList { get; private set; }
+
+
+        // Mac Address Property
         public string MacAddress
         {
             get => this.address;
@@ -54,6 +81,7 @@ namespace BUILDLet.WOL
             }
         }
 
+        // Port Property
         public int Port
         {
             get => this.port;
@@ -67,6 +95,7 @@ namespace BUILDLet.WOL
             }
         }
 
+        // Count Property
         public int Count
         {
             get => this.count;
@@ -80,6 +109,7 @@ namespace BUILDLet.WOL
             }
         }
 
+        // Interval Property
         public int Interval
         {
             get => this.interval;
@@ -93,6 +123,7 @@ namespace BUILDLet.WOL
             }
         }
 
+        // CanSend Property
         public bool CanSend
         {
             get => this.can_send;
@@ -106,6 +137,7 @@ namespace BUILDLet.WOL
             }
         }
 
+        // CommandExecuted Property
         public bool CommandExecuted
         {
             get => this.executed;
@@ -118,6 +150,7 @@ namespace BUILDLet.WOL
             }
         }
 
+        // ResultMessage Property
         public string ResultMessage
         {
             get => this.message;
@@ -131,6 +164,7 @@ namespace BUILDLet.WOL
             }
         }
 
+        // ResultSeverity Property
         public TSeverity ResultSeverity
         {
             get => this.severity;
@@ -144,81 +178,62 @@ namespace BUILDLet.WOL
             }
         }
 
-        public delegate TSeverity GetSeverityDelegate(bool success);
 
+        // for GetSeverity Delegate
+        public delegate TSeverity GetSeverityDelegate(bool success);
         public GetSeverityDelegate GetSeverity;
 
 
+        // for PropertyChanged Event
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected void On_PropertyChanged([CallerMemberName] string propertyName = null)
             => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 
-        public ICommand SendComamand { get; private set; } = new SendCommandContent();
-
-        private class SendCommandContent : ICommand
+        // Update MacAddressHistoryList
+        public void UpdateMacAddressHistoryList()
         {
-            private bool can_execute = true;
-
-
-            public event EventHandler CanExecuteChanged;
-
-            public bool CanExecute(object parameter) => this.can_execute;
-
-            public async void Execute(object parameter)
+            // Check Existence (Upper Case)
+            if (!this.MacAddressHistoryList.Contains(this.MacAddress.ToUpper()))
             {
-                // Convert ViewModel
-                var view_model = (MagicPacketViewModel<TSeverity>)parameter;
-
-                // Change State (Disabled)
-                this.can_execute = false;
-                this.CanExecuteChanged?.Invoke(this, new EventArgs());
-
-                // Change Property (CanSend)
-                view_model.CanSend = false;
-
-                // Change Property (CommandExecuted)
-                view_model.CommandExecuted = false;
-
-                // for Null Result Check
-                string[] result = null;
-
-                try
+                // Check limit
+                if (this.MacAddressHistoryList.Count >= this.RoamingSettingsValues.MaxNumberOfMacAddressHistory)
                 {
-                    // Send Magic Packet (Async)
-                    result = await MagicPacket.SendAsync(view_model.MacAddress, view_model.Port, view_model.Count, view_model.Interval);
-
-                    // Set Message (Success)
-                    view_model.ResultMessage = $"Magic Packet [{view_model.MacAddress}] has been sent successfully.";
-
-                    // Set Severity (Success)
-                    view_model.ResultSeverity = view_model.GetSeverity(true);
+                    // Remove last item
+                    this.MacAddressHistoryList.RemoveAt(this.MacAddressHistoryList.Count - 1);
                 }
-                catch (Exception e)
-                {
-                    // Set Message (Error)
-                    view_model.ResultMessage = e.Message;
 
-                    // Set Severity (Error)
-                    view_model.ResultSeverity = view_model.GetSeverity(false);
-                }
-                finally
-                {
-                    // Restore State (Enabled)
-                    this.can_execute = true;
-                    this.CanExecuteChanged?.Invoke(this, new EventArgs());
-
-                    // Change Property (CanSend)
-                    view_model.CanSend = true;
-
-                    // Change Property (CommandExecuted)
-                    if (result == null || result.Length > 0)
-                    {
-                        view_model.CommandExecuted = true;
-                    }
-                }
+                // Insert to 1st (Upper Case)
+                this.MacAddressHistoryList.Insert(0, this.MacAddress.ToUpper());
             }
+        }
+
+
+        // Save Reaming Settings
+        public void SaveMacAddressHistoryList()
+        {
+            // Save Port, Count, Interval and MacAddressHitsoryList
+            this.RoamingSettingsValues.Port = this.Port;
+            this.RoamingSettingsValues.Count = this.Count;
+            this.RoamingSettingsValues.Interval = this.Interval;
+            this.RoamingSettingsValues.MacAddressHistoryList = this.MacAddressHistoryList;
+
+            // Save ApplicationDataCompositeValue
+            ApplicationData.Current.RoamingSettings.Values["BUILDLet.WOL"] = this.RoamingSettingsValues.CompositeValue;
+        }
+
+
+        // Clear Method
+        public void Clear()
+        {
+            // Clear RoamingSettingsValues
+            this.RoamingSettingsValues.Clear();
+
+            // Reset Port, Count, Interval and MacAddressHistoryList from RoamingSettingsValues
+            this.Port = this.RoamingSettingsValues.Port;
+            this.Count = this.RoamingSettingsValues.Count;
+            this.Interval = this.RoamingSettingsValues.Interval;
+            this.MacAddressHistoryList = this.RoamingSettingsValues.GetMacAddressHistoryList() as List<string>;
         }
     }
 }
