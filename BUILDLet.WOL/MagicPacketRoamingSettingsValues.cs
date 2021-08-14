@@ -29,20 +29,18 @@ namespace BUILDLet.WOL
 {
     public class MagicPacketRoamingSettingsValues
     {
-        // for History of MAC Address List
-        private List<string> address_list;
-
         // for Default Value
         private readonly int default_port;
         private readonly int default_count;
         private readonly int default_interval;
+        private readonly int default_history;
+
+        // for History of MAC Address List
+        private List<string> address_list;
 
 
         // for Roaming Settings
         public ApplicationDataCompositeValue CompositeValue { get; }
-
-        // Maxium Number of MAC Address List
-        public int MaxNumberOfMacAddressHistory { get; }
 
         // Port
         public int Port
@@ -65,10 +63,24 @@ namespace BUILDLet.WOL
             set { this.CompositeValue["Interval"] = value; }
         }
 
+        // Maxium Number of MAC Address List in History
+        public int MaxNumberOfMacAddressHistory
+        {
+            get => (int)this.CompositeValue["NumberOfMacAddressHistory"];
+            set { this.CompositeValue["NumberOfMacAddressHistory"] = value; }
+        }
+
         // MAC Address (Setter Only)
         public List<string> MacAddressHistoryList
         {
-            set { this.CompositeValue["MacAddressHistoryList"] = (this.address_list = value).ToArray(); }
+            set
+            {
+                // Save internal
+                this.address_list = value;
+
+                // Save to CompositeValue
+                this.CompositeValue["MacAddressHistoryList"] = this.address_list.Count > 0 ? this.address_list.ToArray() : null;
+            }
         }
 
         // MAC Address (Getter)
@@ -76,12 +88,13 @@ namespace BUILDLet.WOL
 
 
         // Constructor
-        public MagicPacketRoamingSettingsValues(int defaultPort, int defaultCount, int defaultInterval, int history)
+        public MagicPacketRoamingSettingsValues(int defaultPort, int defaultCount, int defaultInterval, int defaultHistory)
         {
             // Store Default Value
             this.default_port = defaultPort;
             this.default_count = defaultCount;
             this.default_interval = defaultInterval;
+            this.default_history = defaultHistory;
 
             // Get OR New Roaming Settings
             if (ApplicationData.Current.RoamingSettings.Values.ContainsKey("BUILDLet.WOL"))
@@ -93,6 +106,7 @@ namespace BUILDLet.WOL
                 if (this.Port < 0 || this.Port > 65535) { this.Port = defaultPort; }
                 if (this.Count < 1 || this.Count > 100) { this.Count = defaultCount; }
                 if (this.Interval < 0 || this.Interval > 999) { this.Interval = defaultInterval; }
+                if (this.MaxNumberOfMacAddressHistory < 0 && this.MaxNumberOfMacAddressHistory > 10) { this.MaxNumberOfMacAddressHistory = defaultHistory; }
 
                 // Set Address List
                 this.address_list = (this.CompositeValue["MacAddressHistoryList"] as string[])?.ToList() ?? new List<string>();
@@ -106,13 +120,11 @@ namespace BUILDLet.WOL
                 this.Port = this.default_port;
                 this.Count = this.default_count;
                 this.Interval = this.default_interval;
+                this.MaxNumberOfMacAddressHistory = this.default_history;
 
                 // New Address List
                 this.address_list = new List<string>();
             }
-
-            // Set History
-            if (history >= 0 && history <= 10) { this.MaxNumberOfMacAddressHistory = history; }
         }
 
 
@@ -122,6 +134,7 @@ namespace BUILDLet.WOL
             this.Port = this.default_port;
             this.Count = this.default_count;
             this.Interval = this.default_interval;
+            this.MaxNumberOfMacAddressHistory = this.default_history;
             this.address_list.Clear();
         }
     }
