@@ -36,6 +36,7 @@ namespace BUILDLet.WOL
         private int port;
         private int count;
         private int interval;
+        private int history;
 
         private bool can_send = true;
         private bool executed = false;
@@ -44,15 +45,16 @@ namespace BUILDLet.WOL
 
 
         // Constructor
-        public MagicPacketViewModel(int defaultPort, int defaultCount, int defaultInterval, int history, GetSeverityDelegate getSeverity)
+        public MagicPacketViewModel(int defaultPort, int defaultCount, int defaultInterval, int defaultHistory, GetSeverityDelegate getSeverity)
         {
             // Get Roaming Settings
-            this.RoamingSettingsValues = new MagicPacketRoamingSettingsValues(defaultPort, defaultCount, defaultInterval, history);
+            this.RoamingSettingsValues = new MagicPacketRoamingSettingsValues(defaultPort, defaultCount, defaultInterval, defaultHistory);
 
-            // Set Port, Count, Interval and MacAddressHistoryList from RoamingSettingsValues
+            // Set from RoamingSettingsValues
             this.Port = this.RoamingSettingsValues.Port;
             this.Count = this.RoamingSettingsValues.Count;
             this.Interval = this.RoamingSettingsValues.Interval;
+            this.MaxNumberOfMacAddressHistory = this.RoamingSettingsValues.MaxNumberOfMacAddressHistory;
             this.MacAddressHistoryList = this.RoamingSettingsValues.GetMacAddressHistoryList() as List<string>;
 
             // Set GetSeverityDelegate
@@ -118,6 +120,20 @@ namespace BUILDLet.WOL
                 if (this.interval != value)
                 {
                     this.interval = value;
+                    this.On_PropertyChanged();
+                }
+            }
+        }
+
+        // MaxNumberOfMacAddressHistory Property
+        public int MaxNumberOfMacAddressHistory
+        {
+            get => this.history;
+            set
+            {
+                if (this.history != value)
+                {
+                    this.history = value;
                     this.On_PropertyChanged();
                 }
             }
@@ -193,18 +209,28 @@ namespace BUILDLet.WOL
         // Update MacAddressHistoryList
         public void UpdateMacAddressHistoryList()
         {
-            // Check Existence (Upper Case)
-            if (!this.MacAddressHistoryList.Contains(this.MacAddress.ToUpper()))
+            if (this.MaxNumberOfMacAddressHistory <= 0)
             {
-                // Check limit
-                if (this.MacAddressHistoryList.Count >= this.RoamingSettingsValues.MaxNumberOfMacAddressHistory)
+                // Clear List
+                this.MacAddressHistoryList.Clear();
+            }
+            else
+            {
+                // Check Existence (Upper Case)
+                if (!this.MacAddressHistoryList.Contains(this.MacAddress.ToUpper()))
                 {
-                    // Remove last item
-                    this.MacAddressHistoryList.RemoveAt(this.MacAddressHistoryList.Count - 1);
-                }
+                    // Limit Check:
+                    if (this.MacAddressHistoryList.Count >= this.MaxNumberOfMacAddressHistory)
+                    {
+                        // Remove tailing item(s)
+                        this.MacAddressHistoryList.RemoveRange(
+                            this.MaxNumberOfMacAddressHistory - 1,
+                            this.MacAddressHistoryList.Count - this.MaxNumberOfMacAddressHistory + 1);
+                    }
 
-                // Insert to 1st (Upper Case)
-                this.MacAddressHistoryList.Insert(0, this.MacAddress.ToUpper());
+                    // Insert to 1st (Upper Case)
+                    this.MacAddressHistoryList.Insert(0, this.MacAddress.ToUpper());
+                }
             }
         }
 
@@ -212,13 +238,14 @@ namespace BUILDLet.WOL
         // Save Reaming Settings
         public void SaveMacAddressHistoryList()
         {
-            // Save Port, Count, Interval and MacAddressHitsoryList
+            // Save settings
             this.RoamingSettingsValues.Port = this.Port;
             this.RoamingSettingsValues.Count = this.Count;
             this.RoamingSettingsValues.Interval = this.Interval;
+            this.RoamingSettingsValues.MaxNumberOfMacAddressHistory = this.MaxNumberOfMacAddressHistory;
             this.RoamingSettingsValues.MacAddressHistoryList = this.MacAddressHistoryList;
 
-            // Save ApplicationDataCompositeValue
+            // Save settings to ApplicationDataCompositeValue
             ApplicationData.Current.RoamingSettings.Values["BUILDLet.WOL"] = this.RoamingSettingsValues.CompositeValue;
         }
 
@@ -229,10 +256,11 @@ namespace BUILDLet.WOL
             // Clear RoamingSettingsValues
             this.RoamingSettingsValues.Clear();
 
-            // Reset Port, Count, Interval and MacAddressHistoryList from RoamingSettingsValues
+            // Reset settings from RoamingSettingsValues
             this.Port = this.RoamingSettingsValues.Port;
             this.Count = this.RoamingSettingsValues.Count;
             this.Interval = this.RoamingSettingsValues.Interval;
+            this.MaxNumberOfMacAddressHistory = this.RoamingSettingsValues.MaxNumberOfMacAddressHistory;
             this.MacAddressHistoryList = this.RoamingSettingsValues.GetMacAddressHistoryList() as List<string>;
         }
     }

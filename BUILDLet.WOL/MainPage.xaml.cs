@@ -58,8 +58,8 @@ namespace BUILDLet.WOL
         private void NavigationView_Loaded(object sender, RoutedEventArgs e)
         {
             // SET Initial Window Size
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            ApplicationView.PreferredLaunchViewSize = new Size(500, 400);
+            // ApplicationView.PreferredLaunchViewSize = new Size(500, 500);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.CompactOverlay;
 
             // Add Event Handler for ContentFrame Navigation
             this.ContentFrame.Navigated += On_Navigated;

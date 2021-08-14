@@ -32,7 +32,7 @@ namespace BUILDLet.WOL
                 2304, // Port (Default)
                 3,    // Count (Default)
                 100,  // Interval (Default)
-                5,    // History
+                3,    // History (Default)
                 success => success ? InfoBarSeverity.Success : InfoBarSeverity.Error);
 
         // SendComamand

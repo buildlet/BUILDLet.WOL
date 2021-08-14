@@ -5,11 +5,13 @@
     xmlns:local="using:BUILDLet.WOL"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity" 
+    xmlns:interactions="using:Microsoft.Xaml.Interactions.Core"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     d:DesignWidth="500"
-    d:DesignHeight="400">
+    d:DesignHeight="500">
 
     <StackPanel>
         <muxc:InfoBar
@@ -28,7 +30,17 @@
                 IsEnabled="{x:Bind ((local:App)local:App.Current).ViewModel.CanSend, Mode=OneWay}"
                 Width="200"
                 GotFocus="MacAddress_GotFocus"
-                TextChanged="MacAddress_TextChanged"/>
+                TextChanged="MacAddress_TextChanged">
+                <interactivity:Interaction.Behaviors>
+                    <interactions:EventTriggerBehavior 
+                        EventName="QuerySubmitted"
+                        SourceObject="{Binding ElementName=MacAddress}">
+                        <interactions:InvokeCommandAction
+                            Command="{x:Bind ((local:App)local:App.Current).SendComamand}"
+                            CommandParameter="{x:Bind ((local:App)local:App.Current).ViewModel}"/>
+                    </interactions:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AutoSuggestBox>
 
             <Button
                 x:Name="SendButton"

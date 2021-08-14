@@ -9,49 +9,63 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     d:DesignWidth="500"
-    d:DesignHeight="400">
+    d:DesignHeight="500">
 
-    <StackPanel Style="{StaticResource Content}">
-        <muxc:NumberBox
-            x:Name="port"
+    <ScrollViewer
+        VerticalScrollMode="Auto"
+        VerticalScrollBarVisibility="Auto">
+        
+        <StackPanel Style="{StaticResource Content}">
+            <muxc:NumberBox
+            x:Name="Port"
             Header="Port:"
             SpinButtonPlacementMode="Compact"
             Value="{x:Bind ((local:App)local:App.Current).ViewModel.Port, Mode=TwoWay}"
             Maximum="65535"
             Minimum="0"
-            Width="120"/>
-        
-        <muxc:NumberBox
-            x:Name="count"
+            Width="150"/>
+
+            <muxc:NumberBox
+            x:Name="Count"
             Header="Count:"
             SpinButtonPlacementMode="Compact"
             Value="{x:Bind ((local:App)local:App.Current).ViewModel.Count, Mode=TwoWay}"
             Maximum="100"
             Minimum="1"
-            Width="120"/>
-        
-        <muxc:NumberBox
-            x:Name="interval"
+            Width="150"/>
+
+            <muxc:NumberBox
+            x:Name="Interval"
             Header="Interval:"
             PlaceholderText="msec"
             SpinButtonPlacementMode="Compact"
             Value="{x:Bind ((local:App)local:App.Current).ViewModel.Interval, Mode=TwoWay}"
             Maximum="999"
             Minimum="0"
-            Width="120"/>
+            Width="150"/>
 
-        <Button
+            <muxc:NumberBox
+            x:Name="History"
+            Header="Number of History:"
+            SpinButtonPlacementMode="Compact"
+            Value="{x:Bind ((local:App)local:App.Current).ViewModel.MaxNumberOfMacAddressHistory, Mode=TwoWay}"
+            Maximum="10"
+            Minimum="0"
+            Width="150"/>
+
+            <Button
             x:Name="RestoreDefaultsButton"
             Content="Restore Defaults"
             Width="150"
             Margin="5,15,0,0"
             Click="RestoreDefaultsButton_Click"/>
 
-        <Button
+            <Button
             x:Name="VersionInformationButton"
             Content="Version Information"
             Width="150"
             Margin="5,15,0,0"
             Click="VersionInformationButton_Click"/>
-    </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
